@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTML + JS Starter</title>
+  <title>Змейка</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main>
-    <h1>HTML + JS Starter</h1>
-    <p id="message">Welcome to your new project!</p>
-    <button id="actionButton">Click me</button>
+    <h1>Змейка</h1>
+    <div class="game-panel">
+      <canvas id="gameCanvas" width="400" height="400" aria-label="Игровое поле змейки"></canvas>
+      <div class="info">
+        <p>Счёт: <span id="score">0</span></p>
+        <p>Лучший: <span id="bestScore">0</span></p>
+        <p id="status">Нажмите стрелку, чтобы начать</p>
+        <div class="buttons">
+          <button id="startButton">Начать заново</button>
+          <button id="soundButton">Звук: Вкл</button>
+        </div>
+      </div>
+    </div>
+    <p class="hint">Управление: стрелки или WASD. Собирайте яблоки и избегайте столкновений.</p>
   </main>
   <script src="script.js"></script>
 </body>
