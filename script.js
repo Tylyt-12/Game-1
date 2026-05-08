@@ -178,8 +178,8 @@ playButton.addEventListener('click', showGame);
 startButton.addEventListener('click', startGame);
 menuButton.addEventListener('click', showMenu);
 retryButton.addEventListener('click', () => {
+  hideGameOver();
   resetGame();
-  showGame();
 });
 backToMenuButton.addEventListener('click', showMenu);
 

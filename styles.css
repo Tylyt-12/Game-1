@@ -123,6 +123,12 @@ button:hover {
   display: grid;
   place-items: center;
   padding: 1.5rem;
+  z-index: 1000;
+}
+
+.overlay.hidden {
+  display: none;
+  z-index: -1;
 }
 
 .overlay-box {
