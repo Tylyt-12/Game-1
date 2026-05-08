@@ -15,7 +15,11 @@ const backToMenuButton = document.getElementById('backToMenuButton');
 
 const gridSize = 20;
 const tileCount = canvas.width / gridSize;
-const gameSpeed = 120;
+// The speed of the game in milliseconds.
+// A lower number means the snake moves faster and the animation appears smoother
+// because the updates happen more frequently.
+// 120ms = ~8 updates per second. 75ms = ~13 updates per second.
+const gameSpeed = 75;
 
 let snake = [{ x: 10, y: 10 }];
 let velocity = { x: 0, y: 0 };
