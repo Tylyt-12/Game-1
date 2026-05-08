@@ -169,31 +169,30 @@ function draw() {
   // Draw snake segments with interpolation
   snake.forEach((segment, index) => {
     let startX, startY;
-    let endX, endY;
+    const endX = segment.x;
+    const endY = segment.y;
 
-    if (index === 0) { // Head segment
-      startX = previousSnake[0].x;
-      startY = previousSnake[0].y;
-      endX = segment.x;
-      endY = segment.y;
+    // The previous position of the current segment.
+    const prevSegment = previousSnake[index];
 
-      // Handle wrap-around for head interpolation
-      if (Math.abs(endX - startX) > 1) { // Wrapped horizontally
-        if (endX === 0 && startX === tileCount - 1) startX = -1; // Wrapped from right to left
-        else if (endX === tileCount - 1 && startX === 0) startX = tileCount; // Wrapped from left to right
-      }
-      if (Math.abs(endY - startY) > 1) { // Wrapped vertically
-        if (endY === 0 && startY === tileCount - 1) startY = -1; // Wrapped from bottom to top
-        else if (endY === tileCount - 1 && startY === 0) startY = tileCount; // Wrapped from top to bottom
-      }
-    } else { // Body segments
-      // Each body segment moves to where the segment in front of it was in the previous frame.
-      // So, its starting point for interpolation is previousSnake[index-1].
-      // Its ending point is its current logical position (snake[index]).
-      startX = previousSnake[index - 1] ? previousSnake[index - 1].x : segment.x;
-      startY = previousSnake[index - 1] ? previousSnake[index - 1].y : segment.y;
-      endX = segment.x;
-      endY = segment.y;
+    if (prevSegment) {
+      startX = prevSegment.x;
+      startY = prevSegment.y;
+    } else {
+      // If a segment is new (snake just grew), it has no previous position.
+      // We make it appear at its final destination by setting start = end.
+      startX = segment.x;
+      startY = segment.y;
+    }
+
+    // Handle wrap-around for ALL segments to ensure smooth transitions across edges.
+    if (Math.abs(endX - startX) > 1) { // Wrapped horizontally
+      if (endX === 0 && startX === tileCount - 1) startX = -1; // Moving left, wrapping from right edge
+      else if (endX === tileCount - 1 && startX === 0) startX = tileCount; // Moving right, wrapping from left edge
+    }
+    if (Math.abs(endY - startY) > 1) { // Wrapped vertically
+      if (endY === 0 && startY === tileCount - 1) startY = -1; // Moving up, wrapping from bottom edge
+      else if (endY === tileCount - 1 && startY === 0) startY = tileCount; // Moving down, wrapping from top edge
     }
 
     const interpolatedX = (startX + (endX - startX) * interpolationProgress) * gridSize;
