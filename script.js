@@ -22,13 +22,14 @@ let velocity = { x: 0, y: 0 };
 let apple = { x: 7, y: 7 };
 let score = 0;
 let bestScore = 0;
-let gameInterval = null;
+let animationFrameId = null;
+let lastRenderTime = 0;
 let isRunning = false;
 let isGameOver = false;
 let lastDirection = null;
 
 function showMenu() {
-  clearInterval(gameInterval);
+  if (animationFrameId) cancelAnimationFrame(animationFrameId);
   isRunning = false;
   menuScreen.classList.remove('hidden');
   gameScreen.classList.add('hidden');
@@ -44,7 +45,7 @@ function showGame() {
 
 function showGameOver() {
   isGameOver = true;
-  clearInterval(gameInterval);
+  if (animationFrameId) cancelAnimationFrame(animationFrameId);
   gameOverOverlay.classList.remove('hidden');
   finalScoreElement.textContent = score;
 }
@@ -59,6 +60,7 @@ function resetGame() {
   apple = getRandomApplePosition();
   score = 0;
   isRunning = false;
+  if (animationFrameId) cancelAnimationFrame(animationFrameId);
   isGameOver = false;
   lastDirection = null;
   updateScore();
@@ -88,19 +90,38 @@ function startGame() {
   if (velocity.x === 0 && velocity.y === 0) {
     velocity = { x: 1, y: 0 };
   }
+  lastRenderTime = 0;
   isRunning = true;
   statusElement.textContent = 'Игра началась';
-  clearInterval(gameInterval);
-  gameInterval = setInterval(gameLoop, gameSpeed);
+  window.requestAnimationFrame(mainLoop);
 }
 
-function gameLoop() {
+function mainLoop(currentTime) {
+  if (isGameOver) return;
+
+  animationFrameId = window.requestAnimationFrame(mainLoop);
+  const elapsed = currentTime - lastRenderTime;
+
+  if (elapsed > gameSpeed) {
+    lastRenderTime = currentTime;
+    updateGameLogic();
+  }
+
+  draw();
+}
+
+function updateGameLogic() {
   const head = { x: snake[0].x + velocity.x, y: snake[0].y + velocity.y };
 
-  const hitWall = head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount;
+  // Wall wrapping logic
+  if (head.x < 0) head.x = tileCount - 1;
+  if (head.x >= tileCount) head.x = 0;
+  if (head.y < 0) head.y = tileCount - 1;
+  if (head.y >= tileCount) head.y = 0;
+
   const hitSelf = snake.some((segment, index) => index > 0 && segment.x === head.x && segment.y === head.y);
 
-  if (hitWall || hitSelf) {
+  if (hitSelf) {
     isRunning = false;
     if (score > bestScore) bestScore = score;
     updateScore();
@@ -120,13 +141,11 @@ function gameLoop() {
   } else {
     snake.pop();
   }
-
-  draw();
 }
 
 function draw() {
-  ctx.fillStyle = '#0f172a';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Clear the canvas to be transparent for the animated background
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.fillStyle = '#ef4444';
   ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize - 1, gridSize - 1);
