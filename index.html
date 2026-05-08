@@ -8,20 +8,44 @@
 </head>
 <body>
   <main>
-    <h1>Змейка</h1>
-    <div class="game-panel">
-      <canvas id="gameCanvas" width="400" height="400" aria-label="Игровое поле змейки"></canvas>
-      <div class="info">
-        <p>Счёт: <span id="score">0</span></p>
-        <p>Лучший: <span id="bestScore">0</span></p>
-        <p id="status">Нажмите стрелку, чтобы начать</p>
-        <div class="buttons">
-          <button id="startButton">Начать заново</button>
-          <button id="soundButton">Звук: Вкл</button>
+    <div class="container">
+      <section class="menu-screen visible" id="menuScreen">
+        <h1>Змейка</h1>
+        <p>Собирайте яблоки, расширяйте змею и избегайте стен и собственного хвоста.</p>
+        <div class="menu-actions">
+          <button id="playButton">Играть</button>
         </div>
-      </div>
+        <div class="menu-hint">
+          <p>Управление: стрелки или WASD.</p>
+        </div>
+      </section>
+
+      <section class="game-screen hidden" id="gameScreen">
+        <div class="game-panel">
+          <canvas id="gameCanvas" width="400" height="400" aria-label="Игровое поле змейки"></canvas>
+          <div class="info">
+            <p>Счёт: <span id="score">0</span></p>
+            <p>Лучший: <span id="bestScore">0</span></p>
+            <p id="status">Нажмите стрелку, чтобы начать</p>
+            <div class="buttons">
+              <button id="startButton">Старт</button>
+              <button id="menuButton">Меню</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="overlay hidden" id="gameOverOverlay">
+        <div class="overlay-box">
+          <h2>Игра окончена</h2>
+          <p>Ваш счёт: <strong id="finalScore">0</strong></p>
+          <div class="overlay-actions">
+            <button id="retryButton">Попробовать снова</button>
+            <button id="backToMenuButton">В главное меню</button>
+          </div>
+        </div>
+      </section>
     </div>
-    <p class="hint">Управление: стрелки или WASD. Собирайте яблоки и избегайте столкновений.</p>
   </main>
   <script src="script.js"></script>
 </body>

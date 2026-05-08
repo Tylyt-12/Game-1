@@ -19,10 +19,6 @@ body {
 
 main {
   width: min(100%, 760px);
-  border-radius: 24px;
-  padding: 2rem;
-  background: rgba(15, 23, 42, 0.88);
-  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.45);
 }
 
 h1 {
@@ -83,10 +79,71 @@ button:hover {
   background: #1d4ed8;
 }
 
-.hint {
+.hint,
+.menu-hint {
   margin-top: 1.5rem;
   color: #cbd5e1;
   font-size: 0.95rem;
+}
+
+.container {
+  position: relative;
+  width: min(100%, 760px);
+}
+
+.menu-screen,
+.game-screen {
+  border-radius: 24px;
+  padding: 2rem;
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.35);
+}
+
+.menu-screen.visible,
+.game-screen.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.menu-actions,
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.overlay-box {
+  width: min(100%, 420px);
+  border-radius: 24px;
+  padding: 2rem;
+  background: #111827;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+}
+
+.overlay-box h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.overlay-box p {
+  margin: 0 0 1.5rem;
+  color: #cbd5e1;
+  font-size: 1rem;
 }
 
 @media (max-width: 700px) {
