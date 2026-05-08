@@ -31,17 +31,13 @@ function showMenu() {
   clearInterval(gameInterval);
   isRunning = false;
   menuScreen.classList.remove('hidden');
-  menuScreen.classList.add('visible');
   gameScreen.classList.add('hidden');
-  gameScreen.classList.remove('visible');
   hideGameOver();
 }
 
 function showGame() {
   menuScreen.classList.add('hidden');
-  menuScreen.classList.remove('visible');
   gameScreen.classList.remove('hidden');
-  gameScreen.classList.add('visible');
   hideGameOver();
   resetGame();
 }
@@ -50,13 +46,11 @@ function showGameOver() {
   isGameOver = true;
   clearInterval(gameInterval);
   gameOverOverlay.classList.remove('hidden');
-  gameOverOverlay.classList.add('visible');
   finalScoreElement.textContent = score;
 }
 
 function hideGameOver() {
   gameOverOverlay.classList.add('hidden');
-  gameOverOverlay.classList.remove('visible');
 }
 
 function resetGame() {
